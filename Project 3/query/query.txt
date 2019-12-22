@@ -1,0 +1,56 @@
+Query.1
+---------------------
+select a.Name as Name, sum(il.unitprice) as AmountSpent, c.Customerid, c.Firstname, c.lastname 
+from Artist a 
+Join Album al ON al.Artistid = a.Artistid 
+Join Track t ON t.Albumid = al.albumid 
+Join InvoiceLine il ON il.Trackid = t.Trackid 
+Join Invoice i ON i.Invoiceid = il.Invoiceid 
+Join Customer c ON c.Customerid = i.Customerid 
+WHERE a.name = 'Iron Maiden' 
+Group by c.Customerid 
+Order by AmountSpent desc limit 10;
+
+
+Query.2
+-----------------------
+SELECT t3.Country, (t3.TotalSpent), t3.firstname, t3.lastname, t3.customerid
+from
+    (SELECT Country, MAX(TotalSpent) AS TotalSpent
+    from
+        (SELECT Customer.Country, sum(Invoice.total) AS TotalSpent, Customer.FirstName, Customer.LastName, Customer.CustomerID 
+        FROM Customer 
+        JOIN Invoice 
+        ON Customer.CustomerId = Invoice.CustomerId 
+        GROUP BY customer.country, Customer.CustomerID 
+        ORDER BY Country)t1
+    Group By country)t2
+
+join 
+    (SELECT Customer.Country, sum(Invoice.total) AS TotalSpent, Customer.FirstName, Customer.LastName, Customer.CustomerID 
+        FROM Customer 
+        JOIN Invoice 
+        ON Customer.CustomerId = Invoice.CustomerId 
+        GROUP BY customer.country, Customer.CustomerID 
+        ORDER BY Country) t3
+
+ON t3.country = t2.country and t3.TotalSpent = t2.TotalSpent
+
+Query-3
+---------------------
+SELECT T.Name, T.Milliseconds, MT.Name 
+FROM Track T 
+JOIN MediaType MT ON T.MediaTypeID = MT.MediaTypeID 
+WHERE T.Milliseconds > 
+(SELECT AVG (milliseconds) FROM Track) ORDER BY 2 
+DESC LIMIT 10;
+
+Query-4
+---------------------
+SELECT Customer.city 
+AS "Customer_City", COUNT(invoice.invoiceID) 
+AS "Invoice_Number" 
+FROM Customer 
+JOIN Invoice ON customer.customerID = invoice.customerID 
+GROUP BY customer.city 
+ORDER BY invoice_number ASC LIMIT 10;

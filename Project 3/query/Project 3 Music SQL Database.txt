@@ -1,0 +1,73 @@
+/*******************************************************************************
+   Chinook Database
+     Description: Query Chinook Database to get answer for question
+   DB Server: DB Browser for SQLite
+   Author: Abdelrazek
+  
+********************************************************************************/
+
+/*******************************************************************************
+SLIDE 1 :what is the cuntry with most spend mony ?
+********************************************************************************/
+
+SELECT  c.Country, sum (total) as total_spend
+FROM Customer c 
+JOIN Invoice i 
+ON c.CustomerId=i.CustomerId
+GROUP BY c.Country
+order by total_spend desc ;
+
+********************************************************************************/
+
+/*******************************************************************************
+SLIDE 2 :What is the first ten composers ?
+********************************************************************************/
+
+SELECT 
+composer, count (Playlistid) as number_songs
+FROM Track t 
+JOIN PlaylistTrack pt 
+ON pt.TrackId=t.TrackId
+GROUP BY Composer
+order by number_songs desc
+limit 10 ;
+
+********************************************************************************/
+
+/*******************************************************************************
+SLIDE 3 :  What is the best ten selling albums ?
+********************************************************************************/
+
+SELECT 
+ar.Name,al.Title,sum(total) as total
+FROM Artist ar 
+JOIN Album al 
+ON ar.ArtistId=al.ArtistId
+join Track t 
+on t.AlbumId=al.AlbumId
+join InvoiceLine 
+on InvoiceLine.TrackId=t.TrackId
+join Invoice
+on Invoice.InvoiceId=InvoiceLine.InvoiceId
+group by ar.Name,al.Title
+order by total desc
+limit 10 ;
+
+********************************************************************************/
+
+/*******************************************************************************
+SLIDE 4 :What is the best employee ?
+********************************************************************************/
+select
+e.FirstName as name,COUNT(e.EmployeeId) as id ,sum(i.Total) as total
+from Employee e
+join Customer c
+on c.SupportRepId =e.EmployeeId
+join Invoice i
+on i.CustomerId =c.CustomerId
+group by e.EmployeeId,e.FirstName
+order by  e.FirstName,total desc ;
+ 
+********************************************************************************/
+
+/*******************************************************************************
