@@ -1,8 +1,8 @@
 /*******************************************************************************
    Chinook Database
-     Description: Query Chinook Database to get answer for question
+   Description: Query Chinook Database to get answer for question
    DB Server: DB Browser for SQLite
-   Author: Abdelrazek
+   Author: Arvind Pradhan
   
 ********************************************************************************/
 
