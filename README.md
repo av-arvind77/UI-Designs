@@ -1,6 +1,6 @@
 # DFND_Udacity_Project-submission
 
-## Project 1 - Interpret a viusalization
+## Project 1 - Interpret a visualization
 
 ## Project 2 - Analyze Survey Data 
 
